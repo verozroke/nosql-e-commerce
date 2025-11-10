@@ -48,12 +48,17 @@
         />
       </div>
     </div>
+    <n-pagination
+      v-model:page="searchParams.page"
+      :page-count="Math.ceil(totalProductsCount / 9)"
+      @update:page="search"
+    />
     <ProductList :products="products" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useMessage, NH1, NH4, NP, NSelect, NSlider, NInput, NInputGroup, NButton, NIcon } from 'naive-ui';
+import { useMessage, NH1, NH4, NP, NSelect, NSlider, NInput, NInputGroup, NButton, NIcon, NPagination } from 'naive-ui';
 
 import { productService, type SearchParamsType } from '~/core/services/product.service';
 import type { Product } from '~/core/types/product';
@@ -72,18 +77,24 @@ const categories = [
 ]
 
 const priceRange = ref([0, 40000])
-
+const totalProductsCount = ref(0)
 
 const searchParams = ref<SearchParamsType>({
   q: '',
   min_price: priceRange.value[0],
   max_price: priceRange.value[1],
   category: null,
+  page: 1
 })
+
+
+
 async function getProducts() {
   try {
     const data = await productService.products(searchParams.value)
-    products.value = data
+    products.value = data.items
+    searchParams.value.page = data.page
+    totalProductsCount.value = data.total
   } catch (error) {
     console.error(error)
     message.error('Could not get products')

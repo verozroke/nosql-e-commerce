@@ -1,55 +1,53 @@
 <template>
-  <nuxt-layout :name="'sign'">
-    <NCard
-      title="Sign In"
-      size="medium"
-      class="max-w-xl"
+  <NCard
+    title="Sign In"
+    size="medium"
+    class="max-w-xl"
+  >
+    <n-form
+      ref="formRef"
+      :model="modelRef"
+      :rules="rules"
     >
-      <n-form
-        ref="formRef"
-        :model="modelRef"
-        :rules="rules"
+      <n-form-item
+        path="username"
+        label="Username"
       >
-        <n-form-item
-          path="username"
-          label="Username"
-        >
-          <n-input
-            v-model:value="modelRef.username"
-            @keydown.enter.prevent
-          />
-        </n-form-item>
-        <n-form-item
-          path="password"
-          label="Password"
-        >
-          <n-input
-            v-model:value="modelRef.password"
-            type="password"
-            @keydown.enter.prevent
-          />
-        </n-form-item>
-        <NuxtLink
-          href="/sign-up"
-          class="text-slate-700/70 hover:underline"
-        >Didn't registered yet?</NuxtLink>
-        <n-row :gutter="[0, 24]">
-          <n-col :span="24">
-            <div style="display: flex; justify-content: flex-end">
-              <n-button
-                :disabled="modelRef.username === null"
-                round
-                type="primary"
-                @click="handleValidateButtonClick"
-              >
-                Sign In
-              </n-button>
-            </div>
-          </n-col>
-        </n-row>
-      </n-form>
-    </NCard>
-  </nuxt-layout>
+        <n-input
+          v-model:value="modelRef.username"
+          @keydown.enter.prevent
+        />
+      </n-form-item>
+      <n-form-item
+        path="password"
+        label="Password"
+      >
+        <n-input
+          v-model:value="modelRef.password"
+          type="password"
+          @keydown.enter.prevent
+        />
+      </n-form-item>
+      <NuxtLink
+        href="/sign-up"
+        class="text-slate-700/70 hover:underline"
+      >Didn't registered yet?</NuxtLink>
+      <n-row :gutter="[0, 24]">
+        <n-col :span="24">
+          <div style="display: flex; justify-content: flex-end">
+            <n-button
+              :disabled="modelRef.username === null"
+              round
+              type="primary"
+              @click="handleValidateButtonClick"
+            >
+              Sign In
+            </n-button>
+          </div>
+        </n-col>
+      </n-row>
+    </n-form>
+  </NCard>
 </template>
 
 <script setup lang="ts">

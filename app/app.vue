@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { NMessageProvider } from 'naive-ui';
+
 </script>
 
 <template>
   <div>
     <NMessageProvider>
-      <HeaderVue />
-      <NuxtPage />
+      <nuxt-layout>
+        <NuxtPage />
+      </nuxt-layout>
     </NMessageProvider>
+
   </div>
 </template>

@@ -12,6 +12,13 @@ export type SearchParamsType = {
   min_price?: number | null
   max_price?: number | null
   category?: string[] | null
+  page?: number
+}
+
+export type GetProductsResponse = {
+  items: Product[]
+  total: number
+  page: number
 }
 
 const mockProducts: Product[] = [
@@ -59,7 +66,97 @@ const mockProducts: Product[] = [
     price: 29900,
     image_url: "https://www.ryderwear.com/cdn/shop/products/advance-oversized-t-shirt-black-clothing-ryderwear-285430_1080x.jpg?v=1671085618",
     created_at: new Date()
-  }
+  },
+  {
+    _id: "p6",
+    name: "Oversize Hoodie 'Cloud Grey'",
+    description: "Мягкое худи свободного кроя из хлопка с флисом внутри. Идеально для повседневных образов.",
+    category: "hoodies",
+    price: 18900,
+    image_url: "https://www.ryderwear.com/cdn/shop/products/advance-oversized-t-shirt-black-clothing-ryderwear-285430_1080x.jpg?v=1671085618",
+    created_at: new Date()
+  },
+  {
+    _id: "p7",
+    name: "Cargo Pants 'Urban Sand'",
+    description: "Удобные карго штаны с регулировкой по талии и функциональными карманами.",
+    category: "pants",
+    price: 22900,
+    image_url: "https://www.ryderwear.com/cdn/shop/products/advance-oversized-t-shirt-black-clothing-ryderwear-285430_1080x.jpg?v=1671085618",
+    created_at: new Date()
+  },
+  {
+    _id: "p8",
+    name: "Classic T-Shirt 'White Core'",
+    description: "Базовая белая футболка из 100% хлопка. Не просвечивает, плотная ткань.",
+    category: "t-shirts",
+    price: 7900,
+    image_url: "https://www.ryderwear.com/cdn/shop/products/advance-oversized-t-shirt-black-clothing-ryderwear-285430_1080x.jpg?v=1671085618",
+    created_at: new Date()
+  },
+  {
+    _id: "p9",
+    name: "Puffer Jacket 'Midnight Navy'",
+    description: "Тёплая и лёгкая зимняя куртка с водоотталкивающим покрытием.",
+    category: "outerwear",
+    price: 45900,
+    image_url: "https://www.ryderwear.com/cdn/shop/products/advance-oversized-t-shirt-black-clothing-ryderwear-285430_1080x.jpg?v=1671085618",
+    created_at: new Date()
+  },
+  {
+    _id: "p10",
+    name: "Sneakers 'Mono Black'",
+    description: "Универсальные кроссовки из эко-кожи с амортизирующей подошвой.",
+    category: "shoes",
+    price: 29900,
+    image_url: "https://www.ryderwear.com/cdn/shop/products/advance-oversized-t-shirt-black-clothing-ryderwear-285430_1080x.jpg?v=1671085618",
+    created_at: new Date()
+  },
+  {
+    _id: "p11",
+    name: "Oversize Hoodie 'Cloud Grey'",
+    description: "Мягкое худи свободного кроя из хлопка с флисом внутри. Идеально для повседневных образов.",
+    category: "hoodies",
+    price: 18900,
+    image_url: "https://www.ryderwear.com/cdn/shop/products/advance-oversized-t-shirt-black-clothing-ryderwear-285430_1080x.jpg?v=1671085618",
+    created_at: new Date()
+  },
+  {
+    _id: "p12",
+    name: "Cargo Pants 'Urban Sand'",
+    description: "Удобные карго штаны с регулировкой по талии и функциональными карманами.",
+    category: "pants",
+    price: 22900,
+    image_url: "https://www.ryderwear.com/cdn/shop/products/advance-oversized-t-shirt-black-clothing-ryderwear-285430_1080x.jpg?v=1671085618",
+    created_at: new Date()
+  },
+  {
+    _id: "p13",
+    name: "Classic T-Shirt 'White Core'",
+    description: "Базовая белая футболка из 100% хлопка. Не просвечивает, плотная ткань.",
+    category: "t-shirts",
+    price: 7900,
+    image_url: "https://www.ryderwear.com/cdn/shop/products/advance-oversized-t-shirt-black-clothing-ryderwear-285430_1080x.jpg?v=1671085618",
+    created_at: new Date()
+  },
+  {
+    _id: "p14",
+    name: "Puffer Jacket 'Midnight Navy'",
+    description: "Тёплая и лёгкая зимняя куртка с водоотталкивающим покрытием.",
+    category: "outerwear",
+    price: 45900,
+    image_url: "https://www.ryderwear.com/cdn/shop/products/advance-oversized-t-shirt-black-clothing-ryderwear-285430_1080x.jpg?v=1671085618",
+    created_at: new Date()
+  },
+  {
+    _id: "p15",
+    name: "Sneakers 'Mono Black'",
+    description: "Универсальные кроссовки из эко-кожи с амортизирующей подошвой.",
+    category: "shoes",
+    price: 29900,
+    image_url: "https://www.ryderwear.com/cdn/shop/products/advance-oversized-t-shirt-black-clothing-ryderwear-285430_1080x.jpg?v=1671085618",
+    created_at: new Date()
+  },
 ]
 export type BaseResponse = { status: string }
 
@@ -100,14 +197,14 @@ class AuthService {
   }
 
 
-  async products(searchParams: SearchParamsType): Promise<Product[]> {
+  async products(searchParams: SearchParamsType): Promise<GetProductsResponse> {
     const params: Record<string, string | number> = {}
 
     if (searchParams.q) params.q = searchParams.q
     if (searchParams.min_price) params.min_price = searchParams.min_price
     if (searchParams.max_price) params.max_price = searchParams.max_price
     if (searchParams.category?.length) params.category = searchParams.category.join(',')
-
+    params.page = searchParams.page ?? 1
     const { data } = await axios.get<Product[]>(
       `${this.BASE_URL}/product/`,
       {
@@ -118,7 +215,11 @@ class AuthService {
       }
     )
 
-    return mockProducts
+    return {
+      items: mockProducts.slice((params.page - 1) * 9, params.page * 9),
+      page: params.page,
+      total: mockProducts.length
+    }
   }
 
 

@@ -61,6 +61,22 @@
           </template>
         </n-button>
       </NuxtLink>
+
+      <n-button
+        strong
+        quaternary
+        circle
+        @click="logout"
+      >
+        <template #icon>
+          <n-icon
+            size="28"
+            color="#fff"
+          >
+            <LogOutOutlined />
+          </n-icon>
+        </template>
+      </n-button>
     </template>
 
     <!-- IF NOT LOGGED IN -->
@@ -77,7 +93,8 @@
 <script setup lang="ts">
 import { NIcon, NButton, NBadge } from 'naive-ui';
 
-import { ShoppingCartOutlined, PersonOutlined } from '@vicons/material'
+import { ShoppingCartOutlined, PersonOutlined, LogOutOutlined } from '@vicons/material'
+import { authService } from '~/core/services/auth.service';
 
 const router = useRouter()
 
@@ -92,14 +109,18 @@ onMounted(() => {
 })
 
 
-
 function syncCart() {
   cartCount.value = JSON.parse(localStorage.getItem('products-cart') || '[]').length
 }
 
 
-
 function goToSignIn() {
+  router.push('/sign-in')
+}
+
+
+const logout = async () => {
+  await authService.logout()
   router.push('/sign-in')
 }
 </script>
