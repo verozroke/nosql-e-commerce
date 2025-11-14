@@ -22,9 +22,9 @@ export type BaseResponse = { status: string }
 
 export type ChangePasswordResponse = BaseResponse & { userId: string }
 
-const ROUTE_SEGMENT = 'user'
+const ROUTE_SEGMENT = ''
 const BASE_URL = config.public.API_URL
-  ? `${config.public.API_URL}/${ROUTE_SEGMENT}`
+  ? `${config.public.API_URL}${ROUTE_SEGMENT}`
   : ''
 
 class AuthService {
@@ -44,7 +44,7 @@ class AuthService {
 
   async signIn(body: SignInBody): Promise<string> {
     const { data } = await axios.post<SignInResponse>(
-      `${this.BASE_URL}/sign-in`,
+      `${this.BASE_URL}/api/auth/login`,
       body,
       {
         headers: {
@@ -61,7 +61,7 @@ class AuthService {
 
   async signUp(body: SignInBody): Promise<string> {
     await axios.post<SignInResponse>(
-      `${this.BASE_URL}/sign-up`,
+      `${this.BASE_URL}/api/auth/register`,
       body,
       {
         headers: {
@@ -79,7 +79,7 @@ class AuthService {
   }
 
   async me(): Promise<User> {
-    const { data } = await axios.get<User>(`${this.BASE_URL}/me`, {
+    const { data } = await axios.get<User>(`${this.BASE_URL}/api/auth/me`, {
       headers: this.getAuthHeaders(),
     })
 
