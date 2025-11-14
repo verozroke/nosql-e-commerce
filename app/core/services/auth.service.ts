@@ -8,7 +8,7 @@ export type SignInBody = {
 }
 
 export type SignInResponse = {
-  access_token: string
+  token: string
 }
 
 
@@ -36,6 +36,7 @@ class AuthService {
 
   private getAuthHeaders() {
     const token = localStorage.getItem('token')
+    console.log(token)
     return {
       'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -48,28 +49,28 @@ class AuthService {
       body,
       {
         headers: {
-          'Content-Encoding': 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     )
 
-    localStorage.setItem('token', data.access_token)
+    localStorage.setItem('token', data.token)
 
     return 'Sign In is successful.'
   }
 
 
   async signUp(body: SignInBody): Promise<string> {
-    await axios.post<SignInResponse>(
+    const { data } = await axios.post<SignInResponse>(
       `${this.BASE_URL}/api/auth/register`,
       body,
       {
         headers: {
-          'Content-Encoding': 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     )
-
+    console.log(data)
     return 'Sign Up is successful.'
   }
 
@@ -79,11 +80,11 @@ class AuthService {
   }
 
   async me(): Promise<User> {
-    const { data } = await axios.get<User>(`${this.BASE_URL}/api/auth/me`, {
+    const { data } = await axios.get<{ user: User }>(`${this.BASE_URL}/api/auth/me`, {
       headers: this.getAuthHeaders(),
     })
 
-    return data
+    return data.user
   }
 
 

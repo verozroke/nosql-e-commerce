@@ -122,7 +122,7 @@ const addToCart = async () => {
   const cart: Product[] = JSON.parse(localStorage.getItem('products-cart') || '[]')
 
   // проверяем нет ли уже такого товара
-  const exists = cart.some(item => item._id === product.value?._id)
+  const exists = cart.some(item => item.id === product.value?.id)
   if (!exists) {
     cart.push(product.value as Product)
     localStorage.setItem('products-cart', JSON.stringify(cart))
@@ -136,7 +136,7 @@ const addToCart = async () => {
 const removeFromCart = async () => {
   const cart: Product[] = JSON.parse(localStorage.getItem('products-cart') || '[]')
   // фильтруем корзину, убирая текущий товар
-  const updatedCart = cart.filter(item => item._id !== product.value?._id)
+  const updatedCart = cart.filter(item => item.id !== product.value?.id)
 
   localStorage.setItem('products-cart', JSON.stringify(updatedCart))
   window.dispatchEvent(new Event("cart-updated"))
@@ -151,7 +151,7 @@ const checkIsCarted = () => {
     return
   }
   const cartedProducts: Product[] = JSON.parse(localStorage.getItem('products-cart') as string)
-  isCarted.value = cartedProducts.some((item) => item._id === product.value?._id)
+  isCarted.value = cartedProducts.some((item) => item.id === product.value?.id)
 }
 
 

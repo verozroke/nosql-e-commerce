@@ -13,9 +13,6 @@
 
 <script setup lang="ts">
 import { useMessage, NH1, NP } from 'naive-ui';
-
-
-import { authService } from '~/core/services/auth.service';
 import { productService } from '~/core/services/product.service';
 import type { Product } from '~/core/types/product';
 const router = useRouter()
@@ -25,8 +22,7 @@ const products = ref<Product[]>([])
 
 async function getRecommendations() {
   try {
-    const user = await authService.me()
-    const recommendations = await productService.recommendations(user._id)
+    const recommendations = await productService.recommendations()
     products.value = recommendations
   } catch (error) {
     console.error(error)

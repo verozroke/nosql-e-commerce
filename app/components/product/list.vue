@@ -2,7 +2,7 @@
   <div class="flex flex-wrap gap-4">
     <ProductItem
       v-for="product in products"
-      :key="product._id"
+      :key="product.id"
       :product="product"
       class="w-1/4"
     />

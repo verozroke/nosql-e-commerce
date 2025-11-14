@@ -25,7 +25,7 @@
     <div class="flex flex-col gap-2">
       <n-alert
         v-for="interaction in interactions"
-        :key="interaction._id"
+        :key="interaction.id"
         :title="interaction.action_type.toUpperCase()"
         :type="actionTypeMap[interaction.action_type as keyof typeof actionTypeMap]"
       >
@@ -36,9 +36,7 @@
             <AttachMoneyOutlined v-if="interaction.action_type === 'view'" />
           </n-icon>
         </template>
-        <div>
 
-        </div>
         <div>Product: {{ interaction.product_id }}</div>
         <div class="opacity-60 text-sm">
           {{ new Date(interaction.timestamp).toLocaleString() }}
@@ -86,7 +84,7 @@ async function loadProfile() {
     return router.push('/sign-in')
   }
 
-  interactions.value = await productService.interactions(user.value._id)
+  interactions.value = (await productService.interactions()).reverse()
   loading.value = false
 }
 

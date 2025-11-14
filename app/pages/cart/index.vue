@@ -16,7 +16,7 @@
         >
           <n-list-item
             v-for="product in cart"
-            :key="product._id"
+            :key="product.id"
             style="max-width: 800px;"
           >
             <n-thing
@@ -47,7 +47,7 @@
                 <n-button
                   tertiary
                   size="small"
-                  @click="goToProduct(product._id)"
+                  @click="goToProduct(product.id)"
                 >
                   <template #icon>
                     <RemoveRedEyeOutlined />
@@ -59,7 +59,7 @@
                   type="error"
                   tertiary
                   size="small"
-                  @click="remove(product._id)"
+                  @click="remove(product.id)"
                 >
                   <template #icon>
                     <DeleteFilled />
@@ -152,6 +152,7 @@ import {
   NH1,
   NP
 } from 'naive-ui'
+import { productService } from '~/core/services/product.service'
 const router = useRouter()
 const message = useMessage()
 
@@ -170,7 +171,7 @@ onMounted(() => {
 })
 
 function remove(id: string) {
-  cart.value = cart.value.filter(p => p._id !== id)
+  cart.value = cart.value.filter(p => p.id !== id)
   localStorage.setItem('products-cart', JSON.stringify(cart.value))
   window.dispatchEvent(new Event("cart-updated"))
 
@@ -190,8 +191,8 @@ async function purchase() {
     return message.warning("Cart is empty")
   }
 
-  // later: productService.purchase(cart)
-  message.success(`Purchased ${cart.value.length} items!`)
+  const responseMessage = await productService.purchase(cart.value)
+  message.success(responseMessage)
 
   cart.value = []
   localStorage.setItem('products-cart', '[]')

@@ -99,12 +99,6 @@ const rules: FormRules = {
         if (!value) {
           return new Error('Username is required')
         }
-        else if (!/^\d*$/.test(value)) {
-          return new Error('Username should be an integer')
-        }
-        else if (Number(value) < 18) {
-          return new Error('Username should be above 18')
-        }
         return true
       },
       trigger: ['input', 'blur']
@@ -117,8 +111,8 @@ const rules: FormRules = {
         if (!value) {
           return new Error('Password is required')
         }
-        else if (Number(value) < 8 || Number(value) > 18) {
-          return new Error('Username should be above 8 and below 20')
+        else if (value.length < 8 || value.length > 20) {
+          return new Error('Password should be above 8 and below 20')
         }
         return true
       },

@@ -50,7 +50,7 @@
     </div>
     <n-pagination
       v-model:page="searchParams.page"
-      :page-count="Math.ceil(totalProductsCount / 9)"
+      :page-count="Math.ceil(totalProductsCount / 12)"
       @update:page="search"
     />
     <ProductList :products="products" />
@@ -69,11 +69,23 @@ const message = useMessage()
 const products = ref<Product[]>([])
 
 const categories = [
-  { label: 'Hoodies', value: 'hoodies' },
-  { label: 'Pants', value: 'pants' },
-  { label: 'T-Shirts', value: 't-shirts' },
-  { label: 'Outerwear', value: 'outerwear' },
-  { label: 'Shoes', value: 'shoes' }
+  { label: "Hoodies", value: "hoodies" },
+  { label: "Pants", value: "pants" },
+  { label: "T-Shirts", value: "t-shirts" },
+  { label: "Outerwear", value: "outerwear" },
+  { label: "Shoes", value: "shoes" },
+
+  { label: "T-Shirt", value: "t-shirt" },
+  { label: "Hoodie", value: "hoodie" },
+  { label: "Sweatshirt", value: "sweatshirt" },
+  { label: "Pants", value: "pants" },
+  { label: "Shorts", value: "shorts" },
+  { label: "Jacket", value: "jacket" },
+  { label: "Sneakers", value: "sneakers" },
+  { label: "Cap", value: "cap" },
+  { label: "Socks", value: "socks" },
+  { label: "Backpack", value: "backpack" },
+  { label: "Shirt", value: "shirt" }
 ]
 
 const priceRange = ref([0, 40000])

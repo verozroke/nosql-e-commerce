@@ -5,7 +5,7 @@
         :src="product.image_url"
         class="rounded-md"
       />
-      <nuxt-link :href="`/product/${product._id}`">
+      <nuxt-link :href="`/product/${product.id}`">
         <div
           class="bg-slate-900/40 opacity-0 hover:opacity-100 rounded-md transition-all w-full h-full absolute inset-0 flex items-center justify-center text-slate-200 underline font-bold"
         >View</div>
@@ -82,7 +82,8 @@ const isCarted = ref(false)
 const message = useMessage()
 const like = async () => {
   try {
-    const likedMessage = await productService.like(props.product._id)
+    console.log(props.product.id)
+    const likedMessage = await productService.like(props.product.id)
     message.success(likedMessage)
   } catch (err) {
     console.error("Failed to like product:", err)
@@ -96,7 +97,7 @@ const addToCart = async () => {
   const cart: Product[] = JSON.parse(localStorage.getItem('products-cart') || '[]')
 
   // проверяем нет ли уже такого товара
-  const exists = cart.some(item => item._id === props.product._id)
+  const exists = cart.some(item => item.id === props.product.id)
   if (!exists) {
     cart.push(props.product)
     localStorage.setItem('products-cart', JSON.stringify(cart))
@@ -110,7 +111,7 @@ const removeFromCart = async () => {
   const cart: Product[] = JSON.parse(localStorage.getItem('products-cart') || '[]')
 
   // фильтруем корзину, убирая текущий товар
-  const updatedCart = cart.filter(item => item._id !== props.product._id)
+  const updatedCart = cart.filter(item => item.id !== props.product.id)
 
   localStorage.setItem('products-cart', JSON.stringify(updatedCart))
   window.dispatchEvent(new Event("cart-updated"))
@@ -125,7 +126,7 @@ const checkIsCarted = () => {
     return
   }
   const cartedProducts: Product[] = JSON.parse(localStorage.getItem('products-cart') as string)
-  isCarted.value = cartedProducts.some((item) => item._id === props.product._id)
+  isCarted.value = cartedProducts.some((item) => item.id === props.product.id)
 }
 
 

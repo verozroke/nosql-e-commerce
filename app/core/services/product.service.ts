@@ -23,7 +23,7 @@ export type GetProductsResponse = {
 
 // const mockProducts: Product[] = [
 //   {
-//     _id: "p1",
+//     id: "p1",
 //     name: "Oversize Hoodie 'Cloud Grey'",
 //     description: "Мягкое худи свободного кроя из хлопка с флисом внутри. Идеально для повседневных образов.",
 //     category: "hoodies",
@@ -32,7 +32,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p2",
+//     id: "p2",
 //     name: "Cargo Pants 'Urban Sand'",
 //     description: "Удобные карго штаны с регулировкой по талии и функциональными карманами.",
 //     category: "pants",
@@ -41,7 +41,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p3",
+//     id: "p3",
 //     name: "Classic T-Shirt 'White Core'",
 //     description: "Базовая белая футболка из 100% хлопка. Не просвечивает, плотная ткань.",
 //     category: "t-shirts",
@@ -50,7 +50,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p4",
+//     id: "p4",
 //     name: "Puffer Jacket 'Midnight Navy'",
 //     description: "Тёплая и лёгкая зимняя куртка с водоотталкивающим покрытием.",
 //     category: "outerwear",
@@ -59,7 +59,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p5",
+//     id: "p5",
 //     name: "Sneakers 'Mono Black'",
 //     description: "Универсальные кроссовки из эко-кожи с амортизирующей подошвой.",
 //     category: "shoes",
@@ -68,7 +68,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p6",
+//     id: "p6",
 //     name: "Oversize Hoodie 'Cloud Grey'",
 //     description: "Мягкое худи свободного кроя из хлопка с флисом внутри. Идеально для повседневных образов.",
 //     category: "hoodies",
@@ -77,7 +77,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p7",
+//     id: "p7",
 //     name: "Cargo Pants 'Urban Sand'",
 //     description: "Удобные карго штаны с регулировкой по талии и функциональными карманами.",
 //     category: "pants",
@@ -86,7 +86,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p8",
+//     id: "p8",
 //     name: "Classic T-Shirt 'White Core'",
 //     description: "Базовая белая футболка из 100% хлопка. Не просвечивает, плотная ткань.",
 //     category: "t-shirts",
@@ -95,7 +95,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p9",
+//     id: "p9",
 //     name: "Puffer Jacket 'Midnight Navy'",
 //     description: "Тёплая и лёгкая зимняя куртка с водоотталкивающим покрытием.",
 //     category: "outerwear",
@@ -104,7 +104,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p10",
+//     id: "p10",
 //     name: "Sneakers 'Mono Black'",
 //     description: "Универсальные кроссовки из эко-кожи с амортизирующей подошвой.",
 //     category: "shoes",
@@ -113,7 +113,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p11",
+//     id: "p11",
 //     name: "Oversize Hoodie 'Cloud Grey'",
 //     description: "Мягкое худи свободного кроя из хлопка с флисом внутри. Идеально для повседневных образов.",
 //     category: "hoodies",
@@ -122,7 +122,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p12",
+//     id: "p12",
 //     name: "Cargo Pants 'Urban Sand'",
 //     description: "Удобные карго штаны с регулировкой по талии и функциональными карманами.",
 //     category: "pants",
@@ -131,7 +131,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p13",
+//     id: "p13",
 //     name: "Classic T-Shirt 'White Core'",
 //     description: "Базовая белая футболка из 100% хлопка. Не просвечивает, плотная ткань.",
 //     category: "t-shirts",
@@ -140,7 +140,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p14",
+//     id: "p14",
 //     name: "Puffer Jacket 'Midnight Navy'",
 //     description: "Тёплая и лёгкая зимняя куртка с водоотталкивающим покрытием.",
 //     category: "outerwear",
@@ -149,7 +149,7 @@ export type GetProductsResponse = {
 //     created_at: new Date()
 //   },
 //   {
-//     _id: "p15",
+//     id: "p15",
 //     name: "Sneakers 'Mono Black'",
 //     description: "Универсальные кроссовки из эко-кожи с амортизирующей подошвой.",
 //     category: "shoes",
@@ -184,11 +184,9 @@ class AuthService {
 
   async recommendations(): Promise<Product[]> {
     const { data } = await axios.get<Product[]>(
-      `${this.BASE_URL}/api/recommendations/`,
+      `${this.BASE_URL}/api/recommendations`,
       {
-        headers: {
-          'Content-Encoding': 'application/json',
-        },
+        headers: this.getAuthHeaders()
       }
     )
 
@@ -205,11 +203,11 @@ class AuthService {
     if (searchParams.category?.length) params.category = searchParams.category.join(',')
     params.page = searchParams.page ?? 1
     const { data } = await axios.get<GetProductsResponse>(
-      `${this.BASE_URL}/api/products/search/`,
+      `${this.BASE_URL}/api/products/search`,
       {
         params,
         headers: {
-          'Content-Encoding': 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     )
@@ -228,7 +226,7 @@ class AuthService {
       `${this.BASE_URL}/api/products/${id}`,
       {
         headers: {
-          'Content-Encoding': 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     )
@@ -263,6 +261,14 @@ class AuthService {
     // console.log("[MOCK] LIKE product:", productId)
   }
 
+  async purchase(products: Product[]): Promise<string> {
+    products.forEach(product => {
+      axios.post(`${this.BASE_URL}/api/interactions/purchase`, { product_id: product.id }, { headers: this.getAuthHeaders(), })
+    })
+
+    return `Purchased ${products.length} items!`
+  }
+
   async interactions(): Promise<Interaction[]> {
     const { data } = await axios.get<Interaction[]>(
       `${this.BASE_URL}/api/user/interactions`,
@@ -272,9 +278,9 @@ class AuthService {
     return data
     // mock:
     // return [
-    //   { _id: '1', user_id: '1', action_type: 'view', product_id: 'p1', timestamp: new Date() },
-    //   { _id: '2', user_id: '1', action_type: 'like', product_id: 'p4', timestamp: new Date() },
-    //   { _id: '3', user_id: '1', action_type: 'purchase', product_id: 'p2', timestamp: new Date() },
+    //   { id: '1', userid: '1', action_type: 'view', productid: 'p1', timestamp: new Date() },
+    //   { id: '2', userid: '1', action_type: 'like', productid: 'p4', timestamp: new Date() },
+    //   { id: '3', userid: '1', action_type: 'purchase', productid: 'p2', timestamp: new Date() },
     // ]
   }
 
